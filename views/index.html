@@ -5,14 +5,18 @@
     <title>Catch</title>
     <link rel="stylesheet" href="index.css">
     <script src="https://kit.fontawesome.com/0bdc55090c.js" crossorigin="anonymous"></script>
-   
+    <!-- <img src="/signup1.png" alt=""> -->
 </head>
 <body>
+    <div class="background-container">
+        <img src="/signup1.png?v=2" alt=""></div>
+    
     <div class="container">
         <h1>Catch</h1><h6>  A L L - Y O U R - E X P E N S E S</h6>
         <div class="form-box">
             <h1 id="title">Sign Up</h1>
-            <form action="">
+            <form action="" id="form">
+                <div id="errMessage" style="display: none"></div>
                 <div class="input-group">
                     <div class="input-field" id="nameField">
                         <i class="fa-solid fa-user"></i>
@@ -35,30 +39,16 @@
             </form>
         </div>
     </div>  
+</div>
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="modalmsg">This email is already registered to Catch :)</p>
+    </div>
+</div>
 
-    <script>
 
-        const signupBtn = document.getElementById("signupBtn");
-        const signinBtn = document.getElementById("signinBtn");
-        const nameField = document.getElementById("nameField");
-        const title = document.getElementById("title");
-
-        //add click functions on both
-
-        signinBtn.onclick = function(){
-            nameField.style.maxHeight = "0";
-            title.innerHTML = "Sign In";
-            signupBtn.classList.add("disable");
-            signinBtn.classList.remove("disable");
-        }
-
-        signupBtn.onclick = function(){
-            nameField.style.maxHeight = "65px";
-            title.innerHTML = "Sign Up";
-            signupBtn.classList.remove("disable");
-            signinBtn.classList.add("disable");
-        }
-
-    </script>
+    <script src="index.js"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
 </body>
 </html>
