@@ -71,7 +71,7 @@ signupBtn.onclick = async function(){
     try{
     axios.post('http://localhost:3000/signup', obj)
         .then(res=>{
-            console.log('Signup successful', res.data);
+            console.log('Signup successful');
         })
         .catch(err=>{
             console.log("Error axios:", err.response);
