@@ -18,14 +18,39 @@ signinBtn.onclick = function(){
 
     err.style.display = "none";
 
-    const name = inputName.value;
     const email = inputEmail.value;
     const password = inputPassword.value;
-    const obj = {name, email, password};
+    const obj = {email, password};
 
     if(!email || !password)return;
 
+    try{
+        axios.post('http://localhost:3000/signin', obj)
+            .then(res=>{
+                console.log('Signin successful', res.data);
+            })
+            .catch(err=>{
+                console.log("Error axios:", err.response);
+                if(err.response && err.response.status === 400 && err.response.data === 'Email already registered'){
+                       const modal = document.getElementById("modal");
+                       const modalmsg = document.getElementById("modalmsg");
+                       modal.style.display = "block";
+                       modalmsg.textContent = `${email} is already registered with Catch`;
+                       
+                 }else {
+                        console.error('Signin failed', err);
+                 }
+                
+            })
+        
+        }
+        catch(err){console.log("Error during signin", err)}
 }
+    
+
+
+
+
 
 signupBtn.onclick = async function(){
     nameField.style.maxHeight = "65px";

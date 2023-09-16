@@ -13,10 +13,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
-// app.use(express.static('images'));
-// app.use(express.static('views'));
-app.use(express.static(path.join(__dirname,'images')));
-app.use(express.static(path.join(__dirname,'views')));
+app.use(express.static('images'));
+app.use(express.static('views'));
+// app.use(express.static(path.join(__dirname,'images')));
+// app.use(express.static(path.join(__dirname,'views')));
 
 sequelize.sync().then(result=>{
     console.log(result);
