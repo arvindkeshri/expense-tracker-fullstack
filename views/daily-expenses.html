@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catch</title>
+    <link rel="stylesheet" href="daily-expenses.css">
+
+</head>
+<body>
+  <div class="container">
+    <div class="daily-expenses">
+        <h2>Daily Expenses </h2>
+        <!-- <img src="../images/icon.png" alt=""> -->
+        <form  id="form" >
+            <div class="input-group">
+                <input type="number" id="amount" placeholder="Amount">
+            </div>
+            <div class="input-group">
+                <input type="text" id="description" placeholder="Describe your expense">
+            </div>
+            <div class="input-group">
+                <select name="field" id="field">
+                    <option value="Food" id="food">Food</option>
+                    <option value="Travel" id="travel">Travel</option>
+                    <option value="Rent" id="rent">Rent</option>
+                    <option value="Entertainment" id="entertainment">Entertainment</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <button class="add-button" id="addbutton">Add</button>
+            </div>             
+        </form>
+        <ul id="list">
+            <li id="item1">List 1</li>
+            <li id="item2">List 1</li>
+            <li id="item3">List 1</li>
+        </ul>
+    </div>
+  </div>  
+  <script src="daily-expenses.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+</body>
+</html>

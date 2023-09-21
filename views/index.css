@@ -55,6 +55,7 @@
     z-index: 1;
     top: -20px;
     margin-top: 10px;
+    
 
 }
 .container h6{
@@ -94,6 +95,7 @@
     margin-bottom: 60px;
     color: #f6461a;
     position: relative;
+    /* position: fixed; */
 
 }
 

@@ -8,11 +8,11 @@ const nameField = document.getElementById("nameField");
 const title = document.getElementById("title");
 const err = document.getElementById("errMessage");
 
-//add click functions on both
+//add click functions on both buttons
 
 signinBtn.onclick = function(){
     nameField.style.maxHeight = "0";
-    title.innerHTML = "Sign In";
+    //title.innerHTML = "Sign In";
     signupBtn.classList.add("disable");
     signinBtn.classList.remove("disable");
 
@@ -28,7 +28,12 @@ signinBtn.onclick = function(){
         axios.post('http://localhost:3000/signin', obj)
             .then(res=>{
                 console.log('Signin successful', res.data);
-            })
+              
+               if(res.status===200){
+                 localStorage.setItem('token', res.data.token);
+                window.location.href = "./daily-expenses.html"; 
+               }
+                })
             .catch(err=>{
                 console.log("Error axios:", err.response);
                 if(err.response && err.response.status === 400 && err.response.data === 'Email already registered'){
@@ -54,7 +59,7 @@ signinBtn.onclick = function(){
 
 signupBtn.onclick = async function(){
     nameField.style.maxHeight = "65px";
-    title.innerHTML = "Sign Up";
+    //title.innerHTML = "Sign Up";
     signupBtn.classList.remove("disable");
     signinBtn.classList.add("disable");
 
