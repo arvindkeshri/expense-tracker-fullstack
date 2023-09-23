@@ -26,7 +26,7 @@ const addExpense = async (req, res) => {
 
 const getExpenses = async (req, res)=>{
     try{
-     const expenses = await  req.user.getExpenses()
+        const expenses = await  req.user.getExpenses()
         return res.status(200).json({expenses}); 
     }catch(err){
       console.error('Error fetching expenses from database', err);

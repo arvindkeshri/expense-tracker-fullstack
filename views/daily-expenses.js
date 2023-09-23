@@ -50,10 +50,11 @@ window.addEventListener("DOMContentLoaded", () => {
   function showExpensesOnScreen(obj) {
     const parentElem = document.getElementById("list");
     const childElem = document.createElement("li");
-    childElem.textContent =`${obj.amount} for ${obj.description} in category ${obj.field}  `;
+    childElem.textContent =`${obj.amount} Rupees for ${obj.description} in category ${obj.field}  `;
     console.log(obj.id);
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
+    deleteButton.className = "delete-button";
     deleteButton.onclick = () => {
       axios
         .delete(`http://localhost:3000/expense/deleteExpense/${obj.id}`, {headers: {"Authorization": token}})
@@ -70,6 +71,51 @@ window.addEventListener("DOMContentLoaded", () => {
     parentElem.appendChild(childElem);
     document.getElementById("form").reset();
   }
+
+// handling eventlistener on premium button
+  document.getElementById('premiumbutton').onclick = async function(e){
+    e.preventDefault();
+
+    try{
+    const response = await axios.get('http://localhost:3000/purchase/premiummembership', { headers: {"Authorization": token}})
+    //console.log("Response>>>>>>>>",response.data.orderid, response.data.key_id); //response will contain orderid
+
+    var options = {
+      "key": response.data.key_id, 
+      "order_id": response.data.orderid, //for one time payment
+      // a handler function to handle the success payment
+      "handler": async function(response){
+          try{
+            await axios.post('http://localhost:3000/purchase/updatetransactionstatus',
+            {order_id: options.order_id, payment_id: response.razorpay_payment_id,},
+            {headers: {"Authorization": token} });
+
+            alert('You are a premium user now');
+
+            }catch(err){
+              console.log(err);
+            }
+           
+            localStorage.setItem('token', response.data.token); //payment token
+        } 
+
+      }
+
+      const rzp1 = new Razorpay(options);
+      rzp1.open();  //screen opens razorpay
+      //Handle payment failure
+      rzp1.on("payment.failed", function (response) {
+        console.log(response)
+        alert("something went wrong!!!")
+    });
+  } catch (err) {
+    //console.error(err);
+  }
+  }
+
+    
+  
+  
 
 
 

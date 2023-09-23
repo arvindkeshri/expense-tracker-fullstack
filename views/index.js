@@ -20,6 +20,7 @@ signinBtn.onclick = function(){
 
     const email = inputEmail.value;
     const password = inputPassword.value;
+    
     const obj = {email, password};
 
     if(!email || !password)return;

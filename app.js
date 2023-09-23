@@ -17,20 +17,26 @@ app.use(express.static('views'));
 
 //import models and database
 const User = require ('./models/user-model');
+const Order = require('./models/order-model')
 const Expense = require('./models/expense-model');
 const sequelize =  require('./util/sequelize');
 
 //import routes
 const userRouter = require('./routes/user');
 const expenseRouter = require('./routes/expenses');
+const purchaseRouter = require('./routes/purchase');
 
 //any model relations
 User.hasMany(Expense);
 Expense.belongsTo(User); //add cascade
+User.hasMany(Order);
+Order.belongsTo(User);
+
 
 //route directs
 app.use('/', userRouter);
 app.use('/expense',expenseRouter);
+app.use('/purchase',purchaseRouter);
 
 
 sequelize.sync()
@@ -38,8 +44,6 @@ sequelize.sync()
     app.listen(3000, ()=>{
             console.log("Server running");
     })
-
-
 }) 
 .catch((err)=>{
     console.log("Database Error setting Sequelize",err);

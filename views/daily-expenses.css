@@ -11,7 +11,27 @@
     height: 100vh;
     background: linear-gradient(135deg, #153677, #4e085f);
     padding: 10px;
+    position:relative;
 
+}
+
+.premium {
+    position: relative;
+    top: 0;
+    right: 0;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 9px 18px;
+    background:  #478ad2;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 30px;
+}
+
+#premiumbutton:hover {
+    background-color: #102475; /* Darker blue on hover */
 }
 
 .daily-expenses{
@@ -76,7 +96,11 @@ form{
     font-weight: bold;
     cursor: pointer;
     border-radius: 40px;
+
     
+}
+#addbutton:hover {
+    background-color: #f70d0d; /* Darker blue on hover */
 }
 
 
@@ -102,7 +126,7 @@ ul li::before{
     left: 12px;
 }
 
-button{
+.delete-button{
     border: none;
     outline: none;
     padding: 9px 18px;
@@ -113,4 +137,8 @@ button{
     cursor: pointer;
     border-radius: 30px;
     
+}
+
+.delete-button:hover {
+    background-color: #060914; /* Darker blue on hover */
 }
