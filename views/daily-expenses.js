@@ -1,5 +1,26 @@
 const token = localStorage.getItem('token');
+
+function parseJwt (token) {
+  var base64Url = token.split('.')[1];
+  var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+
+  return JSON.parse(jsonPayload);
+}
+
+
 window.addEventListener("DOMContentLoaded", () => {
+
+   const decodedToken = parseJwt(token);
+   const ispremiumuser = decodedToken.ispremiumuser;
+   console.log(decodedToken, "ispremiumuser",  ispremiumuser);
+   if(ispremiumuser){
+      showPremiumUser();
+   }
+
+
     // Adding an event listener to the Add button 
     const amount = document.getElementById('amount');
     const description = document.getElementById('description');
@@ -10,10 +31,10 @@ window.addEventListener("DOMContentLoaded", () => {
       const amountValue = amount.value;
       const descriptionValue = description.value;
       const fieldValue = field.value;
-      //const userId = 1;
+      
       const obj = {amount: amountValue, description: descriptionValue, field:fieldValue};
       console.log(obj);
-      //sending this object
+      
       axios
            .post("http://localhost:3000/expense/addExpense", obj, {headers:{"Authorization": token}})
            .then((response)=>{
@@ -78,7 +99,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     try{
     const response = await axios.get('http://localhost:3000/purchase/premiummembership', { headers: {"Authorization": token}})
-    //console.log("Response>>>>>>>>",response.data.orderid, response.data.key_id); //response will contain orderid
+    console.log("Response>>>>>>>>",response,response.data.orderid, response.data.key_id); //response will contain orderid
 
     var options = {
       "key": response.data.key_id, 
@@ -91,33 +112,74 @@ window.addEventListener("DOMContentLoaded", () => {
             {headers: {"Authorization": token} });
 
             alert('You are a premium user now');
+           // localStorage.setItem('token', response.data.token); //payment token
+            showPremiumUser();
 
             }catch(err){
               console.log(err);
             }
            
-            localStorage.setItem('token', response.data.token); //payment token
+            //showLeaderboard();
         } 
 
       }
 
       const rzp1 = new Razorpay(options);
-      rzp1.open();  //screen opens razorpay
-      //Handle payment failure
+      rzp1.open(); 
       rzp1.on("payment.failed", function (response) {
         console.log(response)
-        alert("something went wrong!!!")
+        alert("Payment Failed!")
     });
   } catch (err) {
-    //console.error(err);
+    console.error(err);
   }
   }
 
+
+  function showPremiumUser(){
+    const premiumButton = document.getElementById('premiumbutton');
+    premiumButton.style.display = 'none';
+    const leaderboardBtn = document.getElementById('leaderboardbtn');
+    leaderboardBtn.style.display = 'inline-block';
+    document.getElementById('premiumuser').innerHTML = 'You are a Premium User';
+
+    leaderboardBtn.onclick = async()=>{
+      try{
+      const leaderboardArray = await axios.get('http://localhost:3000/premium/showLeaderboard', { headers: { "Authorization": token } })
+
+      console.log("leaderboardArray>>>>>>>>>>>>>>>>>>>>>",leaderboardArray.data);
+      const leaderboardElem = document.getElementById('leaderboardlist')
+      leaderboardElem.innerHTML = '';   //clear existing list
+      leaderboardArray.data.forEach((expense)=>{
+        childElem = document.createElement('li');
+        childElem.textContent = `Name ${expense.name} Total Expenses - ${expense.total??0}`;
+        console.log(childElem.textContent);
+        leaderboardElem.appendChild(childElem);
+         }) 
+       }catch(err){
+      console.log('Error fetching Leaderboard', err);
+      }
+  
+     }
+  }
     
-  
-  
-
-
+ 
+//    function showLeaderboard(){
+//     const inputElement = document.createElement("input");
+//     inputElement.type = "button";
+//     inputElement.value = "Show Leaderboard";
+//     inputElement.onclick = async()=>{
+//       const leaderboardArray = await axios.get('http://localhost:3000/premium/showleaderboard', { headers: { "Authorization": token } })
+//       console.log(leaderboardArray);
+//       const leaderboardElem = document.getElementById('leaderboardlist')
+      
+//       leaderboardArray.data.forEach((userDetails)=>{
+//         childElem = document.createElement('li');
+//         childElem.textContent = `Name${userDetails.name} Total Expenses - ${userDetails.totalExpense??0}`;
+//         leaderboardElem.appendChild(childElem);
+//    })
+//   }
+// }
 
 
 

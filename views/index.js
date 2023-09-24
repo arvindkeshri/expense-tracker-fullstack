@@ -32,7 +32,8 @@ signinBtn.onclick = function(){
               
                if(res.status===200){
                  localStorage.setItem('token', res.data.token);
-                window.location.href = "./daily-expenses.html"; 
+                 console.log(res.data);
+                 window.location.href = "./daily-expenses.html"; 
                }
                 })
             .catch(err=>{
