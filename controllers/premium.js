@@ -23,13 +23,10 @@ const getUserLeaderboard = async(req, res)=>{
             userLeaderboardDetails.push({name:user.name, total:userAggregatedExpenses[user.id]})
         })
 
-        console.log("unsorted>>>>>>>>>>", userLeaderboardDetails);
-        userLeaderboardDetails.forEach((user) => {
-            user.total = parseInt(user.total); // Assuming 'total' is a string
-          });
+    
         //sort users based on their expenditure
         userLeaderboardDetails.sort((a,b)=>{
-            return a.total - b.total;
+            return b.total - a.total;
         })
         console.log("userLeaderboardDetails>>>>>>>>>", userLeaderboardDetails);
         res.status(200).json( userLeaderboardDetails);
