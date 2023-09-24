@@ -1,42 +1,23 @@
-const User = require('../models/user-model');
-const Expense = require('../models/expense-model');
-const sequelize = require('../util/sequelize');
+const User = require("../models/user-model");
+const Expense = require("../models/expense-model");
+const sequelize = require("../util/sequelize");
 
-const getUserLeaderboard = async (req, res)=>{
-    try{
-        const leaderboardofusers = await User.findAll({
-            attributes: ['id', 
-            'name',
-            [sequelize.fn('sum', sequelize.col('expenses.amount')),'total']
-            ],
+const getUserLeaderboard = async (req, res) => {
+  try {
+    const leaderboardofusers = await User.findAll({
+      order: [["total", "DESC"]],
+    });
 
-            include: [
-                {
-                    model: Expense,
-                    attributes: []
-                }
-            ],
+    res.status(200).json(leaderboardofusers);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+};
 
-            group:['id'],
-            
-            order: [['total', 'DESC']]
-
-        })
-        res.status(200).json(leaderboardofusers);
-
-
-    }catch(err){
-        console.log(err)
-        res.status(500).json(err)
-}
-}
-
-module.exports ={
-     getUserLeaderboard
-}
-
-
-
+module.exports = {
+  getUserLeaderboard,
+};
 
 //BRUTE FORCE WAY >>>
 // const getUserLeaderboard = async(req, res)=>{
@@ -59,7 +40,6 @@ module.exports ={
 //             userLeaderboardDetails.push({name:user.name, total:userAggregatedExpenses[user.id]})
 //         })
 
-    
 //         //sort users based on their expenditure
 //         userLeaderboardDetails.sort((a,b)=>{
 //             return b.total - a.total;
@@ -71,4 +51,33 @@ module.exports ={
 //         console.log(err)
 //         res.status(500).json(err)
 //     }
+// }
+
+//Optimization 1 -  using JOINS & group-sequelize function
+// const getUserLeaderboard = async (req, res)=>{
+//     try{
+//         const leaderboardofusers = await User.findAll({
+//             attributes: ['id',
+//             'name',
+//             [sequelize.fn('sum', sequelize.col('expenses.amount')),'total']
+//             ],
+
+//             include: [
+//                 {
+//                     model: Expense,
+//                     attributes: []
+//                 }
+//             ],
+
+//             group:['id'],
+
+//             order: [['total', 'DESC']]
+
+//         })
+//         res.status(200).json(leaderboardofusers);
+
+//     }catch(err){
+//         console.log(err)
+//         res.status(500).json(err)
+// }
 // }

@@ -13,7 +13,9 @@ const addExpense = async (req, res) => {
             const { amount, description, field } = req.body;
             const userId = req.user.id;
             const newExpense = await req.user.createExpense({ amount, description, field});
-            console.log("newExpense created in controller>>>>", newExpense);
+            const total = Number(req.user.total)+Number(newExpense.amount);
+            console.log("newExpense created in controller>>>>", newExpense, total);
+            await User.update({total:total}, {where: {id:userId}})
             return res.status(200).json({expense: newExpense}); //storing new expense in database
       }
        catch (err) {
