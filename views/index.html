@@ -30,7 +30,7 @@
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" placeholder="Password" required id="password" name="password"> 
                     </div>
-                    <p>Forgot password <a href="#">Click here</a></p>
+                    <p>Forgot password <a href="#" id="forgotPasswordId">Click here</a></p>
                 </div>    
                 <div class="btn-field">
                     <button type="button" id="signupBtn">Sign up</button>
@@ -43,7 +43,24 @@
 <div id="modal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <p id="modalmsg">This email is already registered to Catch :)</p>
+        <p id="modalmsg">This email is already registered to Catch </p>
+    </div>
+</div>
+
+<div id="forgotPasswordModal" name= "forgotPasswordModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModalBtn"  onclick="closeForgotPasswordModal()">&times;</span>
+        <h3>Enter your email to reset the password</h3>
+        <p></p>
+        <form id="forgotPasswordForm">
+            <div class="input-field">
+                <input type="text" placeholder="Email" required id="forgotPasswordEmail">
+            </div>
+            <div class="btn-field">
+            <button type="'button" id="resetPasswordBtn">Reset Password</button>
+            </div>
+
+        </form>
     </div>
 </div>
 

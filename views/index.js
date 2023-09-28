@@ -8,8 +8,12 @@ const nameField = document.getElementById("nameField");
 const title = document.getElementById("title");
 const err = document.getElementById("errMessage");
 
-//add click functions on both buttons
 
+const forgotpasswordLink = document.getElementById("forgotPasswordId");
+const resetPasswordBtn = document.getElementById("resetPasswordBtn");
+
+
+//add click functions on both buttons
 signinBtn.onclick = function(){
     nameField.style.maxHeight = "0";
     //title.innerHTML = "Sign In";
@@ -99,9 +103,42 @@ signupBtn.onclick = async function(){
     }
 }
 
+
+
+
+
 function closeModal(){
     const modal = document.getElementById("modal");
     modal.style.display = "none";
     const form = document.getElementById("form");
     form.reset();
+}
+
+
+
+
+
+
+forgotpasswordLink.onclick = function(event){
+event.preventDefault();
+const forgotPasswordModal = document.getElementById("forgotPasswordModal");
+forgotPasswordModal.style.display = "block";
+
+document.getElementById("closeModalBtn").addEventListener("click", function(){
+    event.preventDefault();
+    forgotPasswordModal.style.display ="none";
+})
+
+resetPasswordBtn.onclick = async function(event) {
+    event.preventDefault();
+    const email = document.getElementById("forgotPasswordEmail").value;
+    const obj = {email: email}
+
+    try{
+        const response = await axios.post("http://localhost:3000/password/forgotPasswordMail",obj)
+        
+    }catch(err){console.log(err)}
+    alert(`Link sent to ${email} to create new password`);
+    forgotPasswordModal.style.display ="none";
+ }
 }

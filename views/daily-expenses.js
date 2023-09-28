@@ -163,6 +163,65 @@ window.addEventListener("DOMContentLoaded", () => {
      }
   }
     
+
+  document.getElementById('downloadBtn').addEventListener('click', function download(){
+
+    axios.get('http://localhost:3000/expense/download', {headers: {"Authorization": token}})
+          .then((response)=>{
+            console.log("RESPONSE", response)
+            if(response.status === 200){
+              //backend is sending a download link which on click opens new tab in browser and file starts downloading
+              const a = document.createElement('a');
+              a.href = response.data.fileUrl
+              a.download = `${response.data.filename}`;  //this will instruct browser to download the file named myexpense.csv
+              a.click();
+            }else{
+             console.log("Error downloading expense file, no response")
+            }
+          })
+  })
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 //    function showLeaderboard(){
 //     const inputElement = document.createElement("input");
@@ -180,31 +239,6 @@ window.addEventListener("DOMContentLoaded", () => {
 //    })
 //   }
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

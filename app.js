@@ -26,6 +26,7 @@ const userRouter = require('./routes/user');
 const expenseRouter = require('./routes/expenses');
 const purchaseRouter = require('./routes/purchase');
 const premiumRouter = require('./routes/premium');
+const passwordRouter = require('./routes/password');
 
 //any model relations
 User.hasMany(Expense);
@@ -39,6 +40,7 @@ app.use('/', userRouter);
 app.use('/expense',expenseRouter);
 app.use('/purchase',purchaseRouter);
 app.use('/premium', premiumRouter)
+app.use('/password', passwordRouter)
 
 
 sequelize.sync()

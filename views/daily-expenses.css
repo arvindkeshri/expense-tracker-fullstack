@@ -103,6 +103,12 @@ form{
     background-color: #f70d0d; /* Darker blue on hover */
 }
 
+#downloadBtn:hover {
+    background-color: #f70d0d; /* Darker blue on hover */
+}
+#leaderboardbtn:hover {
+    background-color: #f70d0d; /* Darker blue on hover */
+}
 
 ul li{
     list-style: none;
