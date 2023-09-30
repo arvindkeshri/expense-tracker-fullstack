@@ -9,9 +9,10 @@
 <body>
   <div class="container">
     <div class="daily-expenses">
-        <h2>Daily Expenses </h2>
+        <h1> Daily Expenses Table</h1>
+        <h6 id="premiumuser"></h6>
+        <button class = "leaderboard-button" id="leaderboardbtn" hidden>Show Leaderboard</button>
         <button class="premium" id="premiumbutton">Buy Premium</button>
-        <h4 id="premiumuser"></h4>
         <button class = "add-button" id="leaderboardbtn" hidden>Show Leaderboard</button>
         <!-- <img src="../images/icon.png" alt=""> -->
         <form  id="form" >
@@ -35,15 +36,41 @@
             </div>             
         </form>
         <div class="list-container">
-            <h2>Your Expenses</h2>
-            <ul id="list">
+            <!-- <h2>Your Expenses</h2> -->
+              <div class="daily-expenses">
+                <div class="table">
+                <table id="table" class="table">                      
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Action</th>       
+                  </table>
+                  <button class="add-button" id="downloadBtn">Download File</button>
+              </div>
+              
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+
+            
+            <!-- <ul id="leaderboardlist"> -->
+                <div class="list-container">
+                 
+                    
+                      <div class="daily-expenses">
+                        <div class="table">
+                        <table id="leaderboardtable" class="table"> 
+                            <h2>Leaderboard</h2>                     
+                                <th>Ranking</th>
+                                <th>Total Expenses</th>
+                                <th>Name</th>    
+                          </table>
+                      </div>
+                      
+                    </div>
         
-            </ul>
-            <button class="add-button" id="downloadBtn">Download File</button>
-            <h2>Leaderboard</h2>
-            <ul id="leaderboardlist">
     
-            </ul>
+            <!-- </ul> -->
         </div>
       
     </div>

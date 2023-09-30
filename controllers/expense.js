@@ -5,31 +5,32 @@ const routes = express.Router();
 const path = require("path");
 const bodyParser = require('body-parser');
 const sequelize = require('../util/sequelize');
-const AWS = require('aws-sdk');
-AWS.config.update({ region: 'ap-south-1' });
+// const AWS = require('aws-sdk');
+// AWS.config.update({ region: 'ap-south-1' });
 require('dotenv').config();
 
 
 const addExpense = async (req, res) => {
-    console.log("Expense Data from client to server", req.body);
-    const t = sequelize.transaction();
+    const t = await sequelize.transaction();
     try {
-            //console.log(req.user);
             const { amount, description, field } = req.body;
+            const newExpense = await Expense.create({ amount, description, field},{ transaction: t });
+
             const userId = req.user.id;
-            const newExpense = await req.user.createExpense({ amount, description, field},{ transaction: t });
             const total = Number(req.user.total)+Number(newExpense.amount);
-            console.log("newExpense created in controller>>>>", newExpense, total);
-            await User.update({total:total}, {where: {id:userId}})
-            await t.commit();   //commit the transaction if all successful
-            return res.status(200).json({expense: newExpense}); //storing new expense in database
+            
+            await User.update({total:total}, {where: {id:userId}},{transaction: t})
+            await t.commit();  
+            return res.status(200).json({expense: newExpense}); 
       }
        catch (err) {
       console.error("Unable to add expense to database", err);
-      await t.rollback();   // rollback if error occurs
-      res.status(500).send("Unable to add expense to database" + err);
+      if(t)await t.rollback();   
+      res.status(500).send({message: "Unable to add expense to database", error: err});
     }
   }
+
+  
 
 
 
@@ -46,20 +47,22 @@ const getExpenses = async (req, res)=>{
 
 
 const deleteExpense = async (req, res) => {
-    console.log("Expense Data to delete from client to server", req.body);
+  console.log(req.params)
     const t = await sequelize.transaction();
     try {
-            const uid = req.user.id;
-            const total = Number(req.user.total)-Number(req.params.amount);
-            const deleteExpense = await Expense.findByPk(uid);
+            const uid = req.params.id;
+            const deleteExpense = await Expense.findOne({where: {id:uid}})
+            const user = await User.findOne({where: {id: deleteExpense.userId}});
+            const total = Number(user.total)-Number(deleteExpense.amount);
+            
 
             if(deleteExpense) {
               const deletePromise =  deleteExpense.destroy({transaction: t});
-              const updatePromise =  await User.update({total:total}, {where: {id:userId}, transaction: t})
+              const updatePromise =  await User.update({total:total}, {where: {id:deleteExpense.userId}, transaction: t})
 
               await Promise.all[deletePromise, updatePromise];           
-              await t.commit();   //commit the transaction if all successful
-              res.status(204).json({ success: true,message:"delete successfully"})
+              await t.commit();  
+              res.status(204).json({ success: true,message:"deleted successfully"})
             }else{
               throw new Error('ERROR TO DELETE');
             } 
@@ -67,7 +70,7 @@ const deleteExpense = async (req, res) => {
        catch (err) {
       console.error("Unable to delete expense to database", err);
       await t.rollback();
-      res.status(500).send("Unable to delete expense to database" + err);
+      res.status(500).send({message: "Unable to delete expense to database", error: err});
     }
   }
 

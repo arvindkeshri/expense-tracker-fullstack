@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 //import and middlewares
 const cors = require('cors');
@@ -40,7 +41,7 @@ app.use('/', userRouter);
 app.use('/expense',expenseRouter);
 app.use('/purchase',purchaseRouter);
 app.use('/premium', premiumRouter)
-app.use('/password', passwordRouter)
+// app.use('/password', passwordRouter)
 
 
 sequelize.sync()

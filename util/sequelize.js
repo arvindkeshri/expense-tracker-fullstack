@@ -1,12 +1,40 @@
 const Sequelize = require('sequelize'); 
 
-const sequelize = new Sequelize('expense-tracker', 'root', 'arvind', {
-    host: 'localhost',
-    dialect: 'mysql',
-   // logging: console.log
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USERNAME, process.env.DB_PASSWORD, {
+    host: process.env.DB_HOST,
+    dialect: 'mysql'
 })
 
-//testing the connection 
+module.exports = sequelize;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// testing the connection 
 // async function testConnection(){
 // try{
 //     await sequelize.authenticate();
@@ -15,7 +43,46 @@ const sequelize = new Sequelize('expense-tracker', 'root', 'arvind', {
 //     console.error('Unable to connect to the database');
 // }
 // }
-
 // testConnection();
+// const sequelize = new Sequelize('expense-tracker', 'root', 'arvind', {
+//     host: 'localhost',
+//     dialect: 'mysql',
+// })
 
-module.exports = sequelize;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
