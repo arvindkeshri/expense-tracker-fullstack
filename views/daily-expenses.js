@@ -28,7 +28,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const obj = {amount: amountValue, description: descriptionValue, field:fieldValue};
       
       axios
-           .post("https://65.1.91.74:3000/expense/addExpense", obj, {headers:{"Authorization": token}})
+           .post("http://65.1.91.74:3000/expense/addExpense", obj, {headers:{"Authorization": token}})
            .then((response)=>{
     
             if(response.status === 200){
@@ -86,7 +86,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const confirmDelete = confirm("Are you sure you want to delete this expense?")
     if(!confirmDelete) return;
     axios
-    .delete(`https://65.1.91.74:3000/expense/deleteExpense/${obj.id}`, {headers: {"Authorization": token}})
+    .delete(`http://65.1.91.74:3000/expense/deleteExpense/${obj.id}`, {headers: {"Authorization": token}})
     .then(() => {
      table.removeChild(row);
       console.log("Expense deleted successfully");
@@ -109,7 +109,7 @@ window.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     try{
-    const response = await axios.get('https://65.1.91.74:3000/purchase/premiummembership', { headers: {"Authorization": token}})
+    const response = await axios.get('http://65.1.91.74:3000/purchase/premiummembership', { headers: {"Authorization": token}})
     console.log("Response>>>>>>>>",response,response.data.orderid, response.data.key_id); //response will contain orderid
 
     var options = {
@@ -118,7 +118,7 @@ window.addEventListener("DOMContentLoaded", () => {
       // a handler function to handle the success payment
       "handler": async function(response){
           try{
-            await axios.post('https://65.1.91.74:3000/purchase/updatetransactionstatus',
+            await axios.post('http://65.1.91.74:3000/purchase/updatetransactionstatus',
             {order_id: options.order_id, payment_id: response.razorpay_payment_id,},
             {headers: {"Authorization": token} });
 
@@ -156,7 +156,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     leaderboardBtn.onclick = async()=>{
       try{
-      const leaderboardArray = await axios.get('https://65.1.91.74:3000/premium/showLeaderboard', { headers: { "Authorization": token } })
+      const leaderboardArray = await axios.get('http://65.1.91.74:3000/premium/showLeaderboard', { headers: { "Authorization": token } })
 
         for(let i=0; i<leaderboardArray.data.length; i++){
           let obj = leaderboardArray.data[i];
@@ -187,7 +187,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('downloadBtn').addEventListener('click', function download(){
 
-    axios.get('https://65.1.91.74:3000/expense/download', {headers: {"Authorization": token}})
+    axios.get('http://65.1.91.74:3000/expense/download', {headers: {"Authorization": token}})
           .then((response)=>{
             console.log("RESPONSE", response)
             if(response.status === 200){
