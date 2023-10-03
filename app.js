@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path')
 require('dotenv').config();
 
 //import and middlewares
@@ -13,7 +14,8 @@ app.use(bodyParser.json());
 
 //use static files 
 app.use(express.static('images'));
-app.use(express.static('views'));
+//app.use(express.static('views'));
+app.use(express.static(path.join(__dirname, "views")));
 
 
 //import models and database
