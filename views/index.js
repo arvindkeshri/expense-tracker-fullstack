@@ -30,7 +30,7 @@ signinBtn.onclick = function(){
     if(!email || !password)return;
 
     try{
-        axios.post('http://localhost:3000/signin', obj)
+        axios.post('https://65.1.91.74:3000/signin', obj)
             .then(res=>{
                 console.log('Signin successful', res.data);
               
@@ -80,7 +80,7 @@ signupBtn.onclick = async function(){
 
 
     try{
-    axios.post('http://localhost:3000/signup', obj)
+    axios.post('https://65.1.91.74:3000/signup', obj)
         .then(res=>{
             console.log('Signup successful');
         })
@@ -135,7 +135,7 @@ resetPasswordBtn.onclick = async function(event) {
     const obj = {email: email}
 
     try{
-        const response = await axios.post("http://localhost:3000/password/forgotPasswordMail",obj)
+        const response = await axios.post("https://65.1.91.74:3000/password/forgotPasswordMail",obj)
         
     }catch(err){console.log(err)}
     alert(`Link sent to ${email} to create new password`);

@@ -7,7 +7,7 @@ const authenticate = async(req, res, next)=>{
         const token = req.header('authorization');
         
         console.log(token);
-        if(!token) return res.status(401).json({success:false, message:'Token Missing'});
+        if(!token) return res.status(401).json({success:false, message:'Token Missing & not authenticated'});
         const decodedUser = jwt.verify(token, 'secretKey');
         const userid = decodedUser.userId;
        //console.log('userId>>>>>', user.userId);
@@ -18,7 +18,7 @@ const authenticate = async(req, res, next)=>{
 
     }catch (err){
         console.log(">>>>>>>>>>>>>>>",err);
-        return res.status(401).json({success:false});
+        return res.status(401).json({success:"Not authenticated"});
     }
 }
 
