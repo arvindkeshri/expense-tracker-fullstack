@@ -14,7 +14,8 @@ const resetPasswordBtn = document.getElementById("resetPasswordBtn");
 
 
 //add click functions on both buttons
-signinBtn.onclick = function(){
+signinBtn.onclick = function(event){
+    event.preventDefault(event);
     nameField.style.maxHeight = "0";
     //title.innerHTML = "Sign In";
     signupBtn.classList.add("disable");
@@ -30,7 +31,7 @@ signinBtn.onclick = function(){
     if(!email || !password)return;
 
     try{
-        axios.post('http://65.1.91.74:3000/signin', obj)
+        axios.post('http://localhost:3000/signin', obj)
             .then(res=>{
                 console.log('Signin successful', res.data);
               
@@ -63,7 +64,8 @@ signinBtn.onclick = function(){
 
 
 
-signupBtn.onclick = async function(){
+signupBtn.onclick = async function(event){
+    event.preventDefault(event);
     nameField.style.maxHeight = "65px";
     //title.innerHTML = "Sign Up";
     signupBtn.classList.remove("disable");
@@ -80,7 +82,7 @@ signupBtn.onclick = async function(){
 
 
     try{
-    axios.post('http://65.1.91.74:3000/signup', obj)
+    axios.post('http://localhost:3000/signup', obj)
         .then(res=>{
             console.log('Signup successful');
         })
@@ -135,10 +137,12 @@ resetPasswordBtn.onclick = async function(event) {
     const obj = {email: email}
 
     try{
-        const response = await axios.post("http://65.1.91.74:3000/password/forgotPasswordMail",obj)
+        const response = await axios.post("http://localhost:3000/password/forgotPasswordMail",obj)
+
+        alert(`Link sent to ${email} to create new password`);
         
     }catch(err){console.log(err)}
-    alert(`Link sent to ${email} to create new password`);
+    alert(`Error sending reset password link to ${email}`);
     forgotPasswordModal.style.display ="none";
  }
 }

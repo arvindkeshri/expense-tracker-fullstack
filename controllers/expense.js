@@ -5,8 +5,8 @@ const routes = express.Router();
 const path = require("path");
 const bodyParser = require('body-parser');
 const sequelize = require('../util/sequelize');
-// const AWS = require('aws-sdk');
-// AWS.config.update({ region: 'ap-south-1' });
+const AWS = require('aws-sdk');
+AWS.config.update({ region: 'ap-south-1' });
 require('dotenv').config();
 
 
@@ -14,12 +14,13 @@ const addExpense = async (req, res) => {
     const t = await sequelize.transaction();
     try {
             const { amount, description, field } = req.body;
-            const newExpense = await Expense.create({ amount, description, field},{ transaction: t });
-
             const userId = req.user.id;
+            const newExpense = await req.user.createExpense({ amount, description, field},{ transaction: t });
+
             const total = Number(req.user.total)+Number(newExpense.amount);
-            
-            await User.update({total:total}, {where: {id:userId}},{transaction: t})
+            const user = await User.findOne({where: {id: userId}}, {transaction:t});
+            await user.update({total:total}, {transaction: t})
+
             await t.commit();  
             return res.status(200).json({expense: newExpense}); 
       }
@@ -47,7 +48,7 @@ const getExpenses = async (req, res)=>{
 
 
 const deleteExpense = async (req, res) => {
-  console.log(req.params)
+  
     const t = await sequelize.transaction();
     try {
             const uid = req.params.id;

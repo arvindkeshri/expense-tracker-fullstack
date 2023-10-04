@@ -7,7 +7,8 @@ const Resetpassword = sequelize.define('resetpassword', {
         allowNull: false,
         primaryKey: true
     },
-    
+
+// userId: Sequelize.INTEGER,    
 active: Sequelize.BOOLEAN,
 expireby: Sequelize.DATE
 

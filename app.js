@@ -12,9 +12,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 //use static files 
-app.use(express.static('images'));
-//app.use(express.static('views'));
 app.use(express.static(path.join(__dirname, "views")));
+app.use(express.static(path.join(__dirname, "images")));
 
 
 //import models and database
@@ -42,7 +41,7 @@ app.use('/', userRouter);
 app.use('/expense',expenseRouter);
 app.use('/purchase',purchaseRouter);
 app.use('/premium', premiumRouter)
-// app.use('/password', passwordRouter)
+app.use('/password', passwordRouter)
 
 app.use((req, res)=>{
     res.sendFile(path.join(__dirname,`/views/${req.url}`));
