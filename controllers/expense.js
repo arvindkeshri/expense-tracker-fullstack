@@ -52,8 +52,8 @@ const deleteExpense = async (req, res) => {
     const t = await sequelize.transaction();
     try {
             const uid = req.params.id;
-            const deleteExpense = await Expense.findOne({where: {id:uid}})
-            const user = await User.findOne({where: {id: deleteExpense.userId}});
+            const deleteExpense = await Expense.findOne({where: {id:uid}},  { transaction: t })
+            const user = await User.findOne({where: {id: deleteExpense.userId}},  { transaction: t });
             const total = Number(user.total)-Number(deleteExpense.amount);
             
 
