@@ -4,7 +4,8 @@
 const Brevo = require('@getbrevo/brevo')
 const {v4:uuidv4} = require('uuid');       
 const bcrypt = require('bcrypt'); 
-const path = require('path');        
+const path = require('path'); 
+const sequelize = require('../util/sequelize')       
 
 const Resetpassword = require('../models/password-model');
 const User = require('../models/user-model')
