@@ -77,6 +77,7 @@ const createNewPassword = async(req, res) =>{
 
 const postNewPassword = async(req, res) =>{
   const { id } = req.params;
+  console.log(">>>>>>>>>>>>>>>.id", id)
   const {password, confirmpassword} = req.body;      //can we get that id thru body too?  //is it necessary to check password and confirmpasswords are same here also, already have checked in frontend
   const t = await sequelize.transaction();
   
