@@ -86,7 +86,7 @@ const postNewPassword = async(req, res) =>{
 
     if(!row.active){
       await t.commit();
-      return res.status(400).send({status: "Failed", message: "Expired Link"});
+      return res.status(400).json({status: "Failed", message: "Expired Link", success:false});
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -97,7 +97,7 @@ const postNewPassword = async(req, res) =>{
 
     await Promise.all([updatedPassword, updatedUser]);
     await t.commit();
-    res.status(200).send({status:"Success", message: "Password updated successfully"});
+    res.status(200).send({status:"Success", message: "Password updated successfully", success:true});
 
   }catch(err){
     t.rollback();

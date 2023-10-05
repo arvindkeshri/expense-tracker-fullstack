@@ -28,12 +28,16 @@ const expenseRouter = require('./routes/expenses');
 const purchaseRouter = require('./routes/purchase');
 const premiumRouter = require('./routes/premium');
 const passwordRouter = require('./routes/password');
+const Resetpassword = require('./models/password-model');
 
 //any model relations
 User.hasMany(Expense);
 Expense.belongsTo(User); //add cascade
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(Resetpassword);
+Resetpassword.belongsTo(User);
 
 
 //route directs
