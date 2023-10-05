@@ -27,11 +27,8 @@ const forgotPasswordMail = async(req, res) =>{
         var apiKey = defaultClient.authentications['api-key']; //isapi-key an argument?
         apiKey.apiKey = brevoAPIKey;
         const transEmailApi = new Brevo.TransactionalEmailsApi();
-
         await Promise.all([apiKey, transEmailApi]);
-
         const path = `http://localhost:3000/password/createNewPassword/${id}`;
-
 
       const sender = {
       email: "arvidce@gmail.com",
