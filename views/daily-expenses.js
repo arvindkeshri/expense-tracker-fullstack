@@ -47,6 +47,7 @@ window.addEventListener("DOMContentLoaded", () => {
       .get("http://65.1.91.74:3000/expense/getExpenses",{headers: {"Authorization": token}})
       .then((res) => {
         res.data.expenses.forEach(expense => {
+          //limit, query
           showExpensesOnScreen(expense);
           
         });
